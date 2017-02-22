@@ -3,8 +3,6 @@ public class TennisGame2 implements TennisGame
 {
     public int player1Points = 0;
     public int player2Points = 0;
-    
-  
     public TennisGame2(String player1Name, String player2Name) {
     }
 
@@ -13,31 +11,31 @@ public class TennisGame2 implements TennisGame
     	String P2res = "";
         String literalScore = "";
         if (player1Points == player2Points && player1Points < 4)
-            literalScore = getDrawResult(literalScore);
+            literalScore = getDrawResult(player1Points);
         if (player1Points==player2Points && player1Points>=3)
             literalScore = "Deuce";
         if (player1Points > 0 && player2Points==0)
         {
-            P1res = getPlayer1LiteralPoints(P1res);
+            P1res = getPlayerLiteralPoints(player1Points);
             P2res = "Love";
             literalScore = P1res + "-" + P2res;
         }
         if (player2Points > 0 && player1Points==0)
         {
-            P2res = getPlayer2LiteralPoints(P2res);
+            P2res = getPlayerLiteralPoints(player2Points);
             P1res = "Love";
             literalScore = P1res + "-" + P2res;
         }  
-        if (player1Points>player2Points && player1Points < 4)
+        if (player1Points>player2Points && player1Points < 4 && player2Points > 0)
         {
-            P1res = getPlayer1LiteralPoints(P1res);
-            P2res = getPlayer2LiteralPoints(P2res);
+            P1res = getPlayerLiteralPoints(player1Points);
+            P2res = getPlayerLiteralPoints(player2Points);
             literalScore = P1res + "-" + P2res;
         }
-        if (player2Points>player1Points && player2Points < 4)
+        if (player2Points>player1Points && player2Points < 4 && player1Points > 0)
         {
-            P2res = getPlayer2LiteralPoints(P2res);
-            P1res = getPlayer1LiteralPoints(P1res);
+            P2res = getPlayerLiteralPoints(player2Points);
+            P1res = getPlayerLiteralPoints(player1Points);
             literalScore = P1res + "-" + P2res;
         }
         if (player1Points > player2Points && player2Points >= 3)
@@ -51,68 +49,59 @@ public class TennisGame2 implements TennisGame
         return literalScore;
     }
 
-	private String getPlayer2LiteralPoints(String P2res) {
-		if (player2Points==1)
-		    P2res="Fifteen";
-		if (player2Points==2)
-		    P2res="Thirty";
-        if (player2Points==3)
-            P2res="Forty";
-		return P2res;
-	}
-
-	private String getPlayer1LiteralPoints(String P1res) {
-        if (player1Points==1)
-            P1res="Fifteen";
-		if (player1Points==2)
-		    P1res="Thirty";
-		if (player1Points==3)
-		    P1res="Forty";
-		return P1res;
+	private String getPlayerLiteralPoints(int playerPoints) {
+		if (playerPoints==1)
+		    return "Fifteen";
+		if (playerPoints==2)
+		    return "Thirty";
+        if (playerPoints==3)
+            return "Forty";
+		return "";
 	}
 
 
-	private String getDrawResult(String score) {
-		if (player1Points==0)
-		    score = "Love";
-		if (player1Points==1)
-		    score = "Fifteen";
-		if (player1Points==2)
-		    score = "Thirty";
-		score += "-All";
-		return score;
+	private String getDrawResult(int points) {
+		String aux = "";
+		if (points==0)
+			aux = "Love";
+		if (points==1)
+			aux = "Fifteen";
+		if (points==2)
+			aux=  "Thirty";
+		aux += "-All";
+		return aux;
 	}
     
-    public void SetP1Score(int number){
+    public void setPlayer1Score(int potins){
         
-        for (int i = 0; i < number; i++)
+        for (int i = 0; i < potins; i++)
         {
-            P1Score();
+            player1Score();
         }
             
     }
     
-    public void SetP2Score(int number){
+    public void setPlayer2Score(int points){
         
-        for (int i = 0; i < number; i++)
+        for (int i = 0; i < points; i++)
         {
-            P2Score();
+            player2Score();
         }
             
     }
     
-    public void P1Score(){
+    public void player1Score(){
         player1Points++;
     }
     
-    public void P2Score(){
+    public void player2Score(){
         player2Points++;
     }
 
     public void wonPoint(String player) {
         if (player == "player1")
-            P1Score();
+            player1Score();
         else
-            P2Score();
+            player2Score();
     }
 }
